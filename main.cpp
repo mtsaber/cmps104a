@@ -16,6 +16,9 @@ using namespace std;
 // Print out each input line read in, then strtok it for
 // tokens.
 
+bool yy_flex_debug;
+bool yydebug;
+
 const string CPP = "/usr/bin/cpp";
 constexpr size_t LINESIZE = 1024;
 
@@ -51,7 +54,7 @@ void cpplines (FILE* pipe, const char* filename) {
          char* token = strtok_r (bufptr, " \t\n", &savepos);
          bufptr = NULL;
          if (token == NULL) break;
-         const string* strtok = string_set::intern(token);
+         string_set::intern(token);
          //printf ("token %d.%d: [%s]\n",
                 // linenr, tokenct, token);
       }
@@ -60,8 +63,8 @@ void cpplines (FILE* pipe, const char* filename) {
 }
 
 int main (int argc, char **argv) {
-   bool yy_flex_debug = false;
-   bool yydebug = false;
+   yy_flex_debug = false;
+   yydebug = false;
    bool d_flag = false;
    char *argument;
    char *filename = NULL;
