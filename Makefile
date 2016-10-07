@@ -15,6 +15,12 @@ MODSRC    = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.cpp}
 MISCSRC   = ${filter-out ${MODSRC}, ${HDRSRC} ${CPPSRC}}
 ALLSRC    = README ${MODSRC} ${MISCSRC} Makefile
 
+USER       = mtsaber
+HTTPS      = https://
+GITHUB     = github.com
+GITUSER    = ${USER}@github.com
+REPO       = /mtsaber/cmps104a.git
+
 all : ${EXECBIN}
 
 ${EXECBIN} : ${OBJECTS}
@@ -26,7 +32,7 @@ ${EXECBIN} : ${OBJECTS}
 ci : 
 	git add -A *
 	git commit -a
-
+	git push --all ${HTTPS}${GITHUB}${REPO}
 clean :
 	- rm ${OBJECTS} ${DEPSFILE}
 

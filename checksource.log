@@ -1,7 +1,0 @@
-checksource: improper character \x09 = ^I (tab)
-   file "main.cpp": 1 errors: line 51
-checksource: line length > 72 characters
-   file "Makefile": 1 errors: line 32
-   file "cppstrtok.cpp": 2 errors: lines 45, 75
-   file "main.cpp": 1 errors: line 65
-checksource: TOTAL COMPLAINTS: 5
