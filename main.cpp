@@ -19,19 +19,20 @@ using namespace std;
 
 bool yy_flex_debug;
 bool yydebug;
+extern string_set strset;
 
 int main (int argc, char **argv) {
    yy_flex_debug = false;
    yydebug = false;
-   bool d_flag = false;
+   bool debug_flag = false;
    char *filename = NULL;
-   char *d_args;
+   char *debug_args;
    int opt;
    FILE* output_file;
    int exit_status = EXIT_SUCCESS;  
    set_execname (argv[0]);
    // Analyze the flags
-   while((opt = getopt(argc, argv, "ly@D:")) != -1) {
+   while((opt = getopt(argc, argv, "ly@:D:")) != -1) {
       switch(opt)
       {
          case 'l':
@@ -44,8 +45,12 @@ int main (int argc, char **argv) {
             set_debugflags(optarg);
             break;
          case 'D':
-            d_flag = true;
-            d_args = optarg;
+            debug_flag = true;
+            debug_args = optarg;
+            break;
+	 case '?':
+            eprintf("%: - %c: invalid option\n", optopt);
+            exit_status = EXIT_FAILURE;
             break;
          default:
             eprintf("%: - %c: invalid option\n", optopt);
@@ -57,7 +62,7 @@ int main (int argc, char **argv) {
    if(strstr(argv[optind], ".oc") != NULL) {
       filename = argv[optind];
       string command;
-      if (d_flag){ command = CPP + " -D" + d_args + " " + filename;}
+      if (debug_flag){ command = CPP + " -D" + debug_args + " " + filename;}
       else { command = CPP + " " + filename; }
       FILE *pipe = popen (command.c_str(), "r");
       if (pipe == NULL) {
@@ -70,11 +75,11 @@ int main (int argc, char **argv) {
          eprint_status (command.c_str(), pclose_rc);
             if(pclose_rc) exit_status = EXIT_FAILURE;
          }
-         char *extension = strstr(filename, ".oc");
-         *extension = '\0';
+         char *ext = strstr(filename, ".oc");
+         *ext = '\0';
          char *output_file_name = strcat(filename, ".str");
          output_file = fopen(output_file_name, "w");
-         string_set::dump(output_file);
+         strset.dump(output_file);
        }
 
    if (filename == NULL){
