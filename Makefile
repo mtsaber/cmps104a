@@ -33,11 +33,15 @@ ci :
 	git add -A *
 	git commit -a
 	git push --all ${HTTPS}${GITHUB}${REPO}
+
+update:
+	git pull
+
 clean :
 	- rm ${OBJECTS} ${DEPSFILE}
 
 spotless : clean
-	- rm ${EXECBIN} List.*.ps List.*.pdf *.str *.oc *.err *.log *.oh *.out
+	- rm ${EXECBIN} *.str *.oc *.err *.log *.oh *.out
 
 deps : ${ALLCSRC}
 	@ echo "# ${DEPSFILE} created `date` by ${MAKE}" >${DEPSFILE}

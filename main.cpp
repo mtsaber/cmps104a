@@ -48,7 +48,7 @@ int main (int argc, char **argv) {
             debug_flag = true;
             debug_args = optarg;
             break;
-	 case '?':
+         case '?':
             eprintf("%: - %c: invalid option\n", optopt);
             exit_status = EXIT_FAILURE;
             break;
@@ -62,8 +62,13 @@ int main (int argc, char **argv) {
    if(strstr(argv[optind], ".oc") != NULL) {
       filename = argv[optind];
       string command;
-      if (debug_flag){ command = CPP + " -D" + debug_args + " " + filename;}
-      else { command = CPP + " " + filename; }
+      if (debug_flag){ 
+         command = CPP + " -D" + debug_args + " " + filename;
+      }
+      else { 
+         command = CPP + " " + filename; 
+      }
+
       FILE *pipe = popen (command.c_str(), "r");
       if (pipe == NULL) {
          syserrprintf (command.c_str());
@@ -74,17 +79,17 @@ int main (int argc, char **argv) {
          int pclose_rc = pclose (pipe);
          eprint_status (command.c_str(), pclose_rc);
             if(pclose_rc) exit_status = EXIT_FAILURE;
-         }
+      }
          char *ext = strstr(filename, ".oc");
          *ext = '\0';
          char *output_file_name = strcat(filename, ".str");
          output_file = fopen(output_file_name, "w");
          strset.dump(output_file);
-       }
+   }
 
    if (filename == NULL){
       eprintf("Invalid File Name: %s \n", argv[optind]);
       exit_status = EXIT_FAILURE;
-  }
+   }
    return exit_status;
 }

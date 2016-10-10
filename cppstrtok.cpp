@@ -42,9 +42,10 @@ void eprint_status (const char* command, int status) {
    if (WIFEXITED (status)) {
       fprintf (stderr, ", exit %d", WEXITSTATUS (status));
    }
-   if (WIFSIGNALED (status)) {      eprint_signal ("Terminated", WTERMSIG (status));
+   if (WIFSIGNALED (status)) {
+      eprint_signal ("Terminated", WTERMSIG (status));
       #ifdef WCOREDUMP
-      if (WCOREDUMP (status)) fprintf (stderr, ", core dumped");
+         if (WCOREDUMP (status)) fprintf (stderr, ", core dumped");
       #endif
    }
    if (WIFSTOPPED (status)) {
@@ -72,7 +73,8 @@ void cpplines (FILE* pipe, const char* filename) {
       int sscanf_rc = sscanf (buffer, "# %d \"%[^\"]\"",
                               &linenr, inputname);
       if (sscanf_rc == 2) {
-         //printf ("DIRECTIVE: line %d file \"%s\"\n", linenr, inputname);
+         //printf ("DIRECTIVE: line %d file \"%s\"\n", 
+                 //linenr, inputname);
          continue;
       }
       char* savepos = NULL;
